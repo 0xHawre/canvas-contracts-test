@@ -67,7 +67,4 @@ To run the contract tests, execute:
 ```bash
 yarn test
 ```
-```scss
 
-This version has correct code block formatting for both installation commands and bash scripts, which should render properly in GitHub. Let me know if you need further tweaks!
-```
