@@ -1,45 +1,31 @@
-# Scroll Canvas Contracts
+Scroll Canvas Developer Documentation
+Components overview
 
-[![test](https://github.com/scroll-tech/canvas-contracts/actions/workflows/contracts.yml/badge.svg)](https://github.com/scroll-tech/canvas-contracts/actions/workflows/contracts.yml)
+(Editable link)
 
-## Welcome to Scroll Canvas
+Overview
+Scroll Canvas consists of the following components:
 
-We are thrilled to have you join us in building unique discoveries with [Scroll Canvas](https://scroll.io/canvas), a new product designed for ecosystem projects to interact with users in a more tailored way.
+ProfileRegistry: A contract for users to mint and query their Canvases.
+Profile: Each Canvas is an instance of the profile smart contract.
+EAS: A technology for issuing on-chain attestations.
+ScrollBadgeResolver: Each attestation passes through this resolver before the badge is minted. It enforces Canvas badge rules.
+ScrollBadge: Each badge is a contract the conforms to a certain interface.
+Profiles
+Each user can mint a Profile instance through ProfileRegistry. This contract is the user's Canvas, and minting it is a prerequisite to collecting badges. Each wallet can only mint one profile. All profiles share the same implementation, upgradable by Scroll to enable new features.
 
-Try Canvas at [scroll.io/canvas](https://scroll.io/canvas)
+The main use of profiles is personalization. Users can configure a username and an avatar. Users can also decide which badges they attach to their profile, and in which order they want to display them.
 
-## Overview
+See the Canvas Interaction Guide section for more details.
 
-**Scroll Canvas** allows users to showcase on-chain credentials, status, and achievements called **Badges** issued and collected across the Scroll ecosystem.
-Users can mint a non-transferable and unique personal persona to collect and display their **Badges**.
+ScrollBadge Schema and Resolver
+We define a Scroll badge EAS schema:
 
-### Key Features
+address badge
+bytes   payload
+This schema is tied to ScrollBadgeResolver. Every time a Scroll badge attestation is created or revoked through EAS, ScrollBadgeResolver executes some checks and actions. After this, it forwards the call to the actual badge implementation.
 
-- **Canvas**: Each Canvas is a smart contract minted through the `ProfileRegistry` contract by the user on Scroll’s website.
-- **Badges**: Attestations of achievements and traits verified through the [Ethereum Attestation Service](https://docs.attest.sh/docs/welcome) (EAS), issued by different projects and the Scroll Foundation.
-  Badges are wallet-bound and non-transferable.
-
-Differences between attestations and NFTs:
-
-| Attestation | NFT |
-| --- | --- |
-| Witness Proofs | Tokenized Assets |
-| Non-transferable | Transferable |
-| Recorded on disk (blockchain history) | Recorded in memory (blockchain states) |
-| Prove ownership at a point in time | Exercise custodianship of an asset |
-
-## Developer Quickstart
-
-Visit the [Developer Documentation](./docs) in this repo to learn more about Canvas.
-
-See [Deployments](./docs/deployments.md) for the official Canvas contract addresses.
-
-See the [Integration Guide](https://scrollzkp.notion.site/Introducing-Scroll-Canvas-Badge-Integration-Guide-8656463ab63b42e8baf924763ed8c9d5) for more information.
-
-## Support
-
-For questions regarding Canvas and custom badge development, please join [Scroll dev support channel](https://discord.com/channels/853955156100907018/1028102371894624337) on Discord.
-
+You can find the schema UID in the Deployments section. Browse the Scroll mainnet badge attestations on the EAS Explorer.
 ## Running the Code
 
 ### Node.js
